@@ -5,15 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC do Espaço - Aventura Educacional Completa</title>
     <style>
+        /* ========== VARIÁVEIS CSS DINÂMICAS ========== */
         :root {
             --primary: #667eea;
             --secondary: #764ba2;
             --accent: #FFD700;
             --success: #00ff87;
             --danger: #ff6b6b;
-            --font-size: 16px;
+
+            /* Font sizes dinâmicos com clamp() */
+            --font-base: clamp(14px, 2vw, 18px);
+            --font-sm: clamp(12px, 1.5vw, 14px);
+            --font-md: clamp(14px, 2vw, 16px);
+            --font-lg: clamp(16px, 2.5vw, 20px);
+            --font-xl: clamp(18px, 3vw, 24px);
+            --font-2xl: clamp(24px, 4vw, 32px);
+            --font-3xl: clamp(28px, 5vw, 40px);
+            --font-4xl: clamp(32px, 6vw, 48px);
+            --font-5xl: clamp(40px, 8vw, 64px);
+
+            /* Spacing dinâmico */
+            --space-xs: clamp(4px, 1vw, 8px);
+            --space-sm: clamp(8px, 1.5vw, 12px);
+            --space-md: clamp(12px, 2vw, 16px);
+            --space-lg: clamp(16px, 2.5vw, 24px);
+            --space-xl: clamp(20px, 3vw, 32px);
+            --space-2xl: clamp(24px, 4vw, 40px);
+            --space-3xl: clamp(32px, 5vw, 56px);
+
+            /* Border radius adaptativo */
+            --radius-sm: clamp(8px, 1.5vw, 12px);
+            --radius-md: clamp(12px, 2vw, 20px);
+            --radius-lg: clamp(16px, 2.5vw, 30px);
+            --radius-xl: clamp(20px, 3vw, 35px);
+            --radius-full: 50%;
+
+            /* Tamanhos adaptáveis */
+            --btn-height: clamp(40px, 8vw, 60px);
+            --control-size: clamp(40px, 8vw, 60px);
+            --card-min-width: clamp(120px, 25vw, 280px);
         }
 
+        /* ========== RESET ========== */
         * {
             margin: 0;
             padding: 0;
@@ -21,6 +54,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* ========== BODY E TEMA ========== */
         body {
             font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
@@ -29,7 +63,8 @@
             min-height: 100vh;
             position: relative;
             user-select: none;
-            font-size: var(--font-size);
+            font-size: var(--font-md);
+            line-height: 1.5;
         }
 
         body.dark-mode {
@@ -52,6 +87,7 @@
             --secondary: #ea580c;
         }
 
+        /* ========== BACKGROUND ANIMADO ========== */
         .animated-bg {
             position: fixed;
             top: 0;
@@ -75,29 +111,33 @@
             75% { transform: translate(100px, 100px) rotate(270deg); }
         }
 
+        /* ========== CONTAINER ========== */
         .container {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: clamp(100%, 95vw, 1400px);
             margin: 0 auto;
-            padding: 20px;
+            padding: var(--space-md);
+            width: 100%;
         }
 
+        /* ========== HEADER ========== */
         .main-header {
             text-align: center;
-            padding: 30px 20px;
+            padding: var(--space-lg) var(--space-md);
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
+            border-radius: var(--radius-xl);
             backdrop-filter: blur(20px);
-            margin-bottom: 30px;
+            margin-bottom: var(--space-xl);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
         .main-title {
-            font-size: 3.5em;
+            font-size: var(--font-4xl);
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            margin-bottom: 15px;
+            margin-bottom: var(--space-md);
             animation: titleBounce 2s ease-in-out infinite;
+            word-wrap: break-word;
         }
 
         @keyframes titleBounce {
@@ -106,34 +146,45 @@
         }
 
         .subtitle {
-            font-size: 1.5em;
+            font-size: var(--font-lg);
             opacity: 0.95;
         }
 
+        #userAvatar {
+            font-size: clamp(3em, 15vw, 5em) !important;
+            margin-bottom: var(--space-md) !important;
+            display: block;
+        }
+
+        /* ========== CONTROLES SUPERIORES ========== */
         .top-controls {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: var(--space-md);
+            right: var(--space-md);
             z-index: 1000;
             display: flex;
-            gap: 15px;
+            gap: var(--space-sm);
             flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .control-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: var(--control-size);
+            height: var(--control-size);
+            min-width: 40px;
+            min-height: 40px;
+            border-radius: var(--radius-full);
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
-            border: 3px solid white;
+            border: clamp(2px, 0.5vw, 4px) solid white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8em;
+            font-size: clamp(1.2em, 3vw, 2em);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
         }
 
         .control-circle:hover {
@@ -145,9 +196,12 @@
             transform: scale(0.95);
         }
 
+        /* ========== TELAS ========== */
         .screen {
             display: none;
             animation: fadeInScreen 0.5s ease;
+            overflow-y: auto;
+            max-height: 100vh;
         }
 
         .screen.active {
@@ -159,24 +213,30 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        /* ========== MENU DE NÍVEIS ========== */
         .level-menu {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
+            gap: var(--space-lg);
+            padding: var(--space-md);
         }
 
         .level-button {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
-            border-radius: 25px;
-            padding: 35px 25px;
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
             text-align: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 4px solid rgba(255, 255, 255, 0.4);
+            border: clamp(2px, 0.5vw, 4px) solid rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
             position: relative;
             overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .level-button::before {
@@ -218,8 +278,8 @@
         }
 
         .level-emoji {
-            font-size: 5em;
-            margin-bottom: 15px;
+            font-size: clamp(3em, 10vw, 5em);
+            margin-bottom: var(--space-md);
             display: block;
             animation: emojiFloat 3s ease-in-out infinite;
             position: relative;
@@ -232,36 +292,38 @@
         }
 
         .level-name {
-            font-size: 1.8em;
+            font-size: var(--font-xl);
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: var(--space-sm);
             position: relative;
             z-index: 1;
         }
 
         .level-desc {
-            font-size: 1.1em;
+            font-size: var(--font-md);
             opacity: 0.9;
-            margin-bottom: 15px;
+            margin-bottom: var(--space-md);
             position: relative;
             z-index: 1;
         }
 
         .level-progress {
-            font-size: 2.5em;
+            font-size: var(--font-2xl);
             position: relative;
             z-index: 1;
         }
 
+        /* ========== GAME HUD ========== */
         .game-hud {
             display: none;
             position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 100px;
+            top: var(--space-md);
+            left: var(--space-md);
+            right: clamp(100px, 15vw, 150px);
             z-index: 999;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: var(--space-sm);
+            justify-content: flex-start;
         }
 
         .game-hud.active {
@@ -271,32 +333,34 @@
         .hud-badge {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px);
-            padding: 15px 30px;
+            padding: var(--space-sm) var(--space-lg);
             border-radius: 50px;
-            border: 3px solid white;
-            font-size: 1.5em;
+            border: clamp(2px, 0.5vw, 3px) solid white;
+            font-size: var(--font-md);
             font-weight: bold;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: var(--space-sm);
+            white-space: nowrap;
         }
 
         .back-button {
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(15px);
-            padding: 15px 30px;
+            padding: var(--space-sm) var(--space-lg);
             border-radius: 50px;
-            border: 3px solid white;
-            font-size: 1.5em;
+            border: clamp(2px, 0.5vw, 3px) solid white;
+            font-size: var(--font-md);
             font-weight: bold;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: var(--space-sm);
             color: white;
+            white-space: nowrap;
         }
 
         .back-button:hover {
@@ -308,46 +372,57 @@
             transform: scale(0.95);
         }
 
+        /* ========== GAME CONTAINER ========== */
         .game-container {
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
             backdrop-filter: blur(20px);
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            min-height: 500px;
+            border: clamp(2px, 0.5vw, 4px) solid rgba(255, 255, 255, 0.3);
+            min-height: 300px;
+            width: 100%;
+            overflow-y: auto;
+            max-height: 90vh;
         }
 
         .game-question {
             text-align: center;
-            font-size: 2.5em;
+            font-size: var(--font-2xl);
             font-weight: bold;
-            margin-bottom: 40px;
-            padding: 25px;
+            margin-bottom: var(--space-xl);
+            padding: var(--space-lg);
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: var(--radius-md);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 15vw, 140px), 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+            width: 100%;
         }
 
         .game-card {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 20px;
-            padding: 35px 20px;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            min-height: clamp(80px, 15vw, 140px);
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 4px solid white;
-            font-size: 3.5em;
+            transition: all 0.3s ease;
+            border: clamp(2px, 0.5vw, 4px) solid white;
+            font-size: clamp(2em, 5vw, 3.5em);
             font-weight: bold;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .game-card::after {
@@ -367,7 +442,7 @@
         }
 
         .game-card:hover {
-            transform: translateY(-10px) scale(1.08);
+            transform: translateY(-8px) scale(1.08);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
             border-color: var(--accent);
         }
@@ -400,22 +475,24 @@
             50% { transform: translateX(15px); }
         }
 
+        /* ========== DROP AREA ========== */
         .drop-area {
             background: rgba(0, 0, 0, 0.2);
-            border: 5px dashed rgba(255, 255, 255, 0.5);
-            border-radius: 25px;
-            padding: 50px;
+            border: clamp(3px, 0.5vw, 5px) dashed rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
             text-align: center;
-            min-height: 180px;
-            margin: 30px 0;
+            min-height: clamp(120px, 20vh, 200px);
+            margin: var(--space-xl) 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: var(--space-md);
             flex-wrap: wrap;
-            font-size: 4em;
+            font-size: clamp(2em, 5vw, 4em);
             font-weight: bold;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .drop-area.highlight {
@@ -432,32 +509,39 @@
         .letter-tile {
             background: white;
             color: var(--primary);
-            padding: 20px 30px;
-            border-radius: 15px;
-            font-size: 0.8em;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-md);
             cursor: move;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
             user-select: none;
+            white-space: nowrap;
         }
 
         .letter-tile:hover {
             transform: scale(1.1);
         }
 
+        /* ========== BOTÕES ========== */
         .btn {
             background: linear-gradient(135deg, var(--accent), #FFA500);
             color: #333;
             border: none;
-            padding: 20px 50px;
+            padding: var(--space-md) var(--space-lg);
             border-radius: 50px;
-            font-size: 1.5em;
+            font-size: var(--font-md);
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             text-transform: uppercase;
-            margin: 10px;
+            margin: var(--space-sm);
+            min-height: var(--btn-height);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
         }
 
         .btn:hover {
@@ -479,9 +563,14 @@
 
         .btn-group {
             text-align: center;
-            margin-top: 40px;
+            margin-top: var(--space-xl);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
         }
 
+        /* ========== MODAIS ========== */
         .modal {
             display: none;
             position: fixed;
@@ -494,6 +583,8 @@
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            padding: var(--space-md);
+            overflow-y: auto;
         }
 
         .modal.active {
@@ -508,15 +599,16 @@
 
         .modal-box {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 35px;
-            padding: 60px;
+            border-radius: var(--radius-xl);
+            padding: clamp(2rem, 5vw, 4rem);
             text-align: center;
-            max-width: 600px;
+            max-width: min(90vw, 600px);
             max-height: 90vh;
             overflow-y: auto;
-            border: 6px solid white;
+            border: clamp(3px, 0.5vw, 6px) solid white;
             box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
             animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
         }
 
         @keyframes modalPop {
@@ -525,8 +617,8 @@
         }
 
         .modal-emoji {
-            font-size: 10em;
-            margin-bottom: 20px;
+            font-size: clamp(6em, 15vw, 10em);
+            margin-bottom: var(--space-md);
             animation: emojiSpin 1s ease;
         }
 
@@ -536,20 +628,24 @@
         }
 
         .modal-title {
-            font-size: 3.5em;
-            margin-bottom: 20px;
+            font-size: var(--font-3xl);
+            margin-bottom: var(--space-lg);
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            word-wrap: break-word;
         }
 
         .modal-text {
-            font-size: 1.8em;
-            margin-bottom: 35px;
+            font-size: var(--font-lg);
+            margin-bottom: var(--space-xl);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
+        /* ========== CONFETTI ========== */
         .confetti {
             position: fixed;
-            width: 15px;
-            height: 15px;
+            width: clamp(8px, 1.5vw, 15px);
+            height: clamp(8px, 1.5vw, 15px);
             pointer-events: none;
             z-index: 3000;
             animation: confettiFall 3s linear forwards;
@@ -562,11 +658,12 @@
             }
         }
 
+        /* ========== MASCOTE ========== */
         .mascot {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-size: 5em;
+            bottom: var(--space-lg);
+            right: var(--space-lg);
+            font-size: clamp(3em, 10vw, 5em);
             z-index: 100;
             animation: mascotBounce 2s ease-in-out infinite;
             cursor: pointer;
@@ -578,20 +675,37 @@
             50% { transform: translateY(-20px) rotate(10deg); }
         }
 
-        .achievements-grid {
+        /* ========== GRIDS RESPONSIVAS ========== */
+        .achievements-grid,
+        .stats-container,
+        .practice-grid,
+        .avatar-grid,
+        .theme-selector {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(100px, 20vw, 200px), 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            width: 100%;
         }
 
-        .achievement-card {
+        .avatar-grid {
+            grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 15vw, 120px), 1fr));
+        }
+
+        .practice-grid {
+            grid-template-columns: repeat(auto-fit, minmax(clamp(70px, 12vw, 100px), 1fr));
+        }
+
+        /* ========== CARDS ========== */
+        .achievement-card,
+        .stat-box {
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
             text-align: center;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
+            min-height: auto;
         }
 
         .achievement-card.unlocked {
@@ -612,67 +726,48 @@
         }
 
         .achievement-icon {
-            font-size: 4em;
-            margin-bottom: 10px;
+            font-size: clamp(3em, 8vw, 4em);
+            margin-bottom: var(--space-md);
         }
 
         .achievement-name {
-            font-size: 1.3em;
+            font-size: var(--font-lg);
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: var(--space-sm);
         }
 
         .achievement-desc {
-            font-size: 0.9em;
+            font-size: var(--font-sm);
             opacity: 0.8;
         }
 
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stat-box {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
         .stat-number {
-            font-size: 4em;
+            font-size: clamp(2em, 8vw, 4em);
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 10px;
+            margin-bottom: var(--space-md);
         }
 
         .stat-label {
-            font-size: 1.3em;
+            font-size: var(--font-md);
             opacity: 0.9;
-        }
-
-        .practice-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
         }
 
         .practice-letter {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: var(--radius-sm);
+            padding: var(--space-md);
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            border: 3px solid white;
-            font-size: 3em;
+            border: clamp(2px, 0.5vw, 3px) solid white;
+            font-size: clamp(2em, 6vw, 3em);
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: clamp(60px, 15vw, 100px);
         }
 
         .practice-letter:hover {
@@ -680,26 +775,22 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
-        /* Avatares */
-        .avatar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
+        /* ========== AVATAR ========== */
         .avatar-option {
-            font-size: 5em;
+            font-size: clamp(3em, 8vw, 5em);
             cursor: pointer;
-            padding: 20px;
-            border-radius: 20px;
-            border: 4px solid transparent;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            border: clamp(3px, 0.5vw, 4px) solid transparent;
             transition: all 0.3s;
             background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .avatar-option:hover {
-            transform: scale(1.2);
+            transform: scale(1.15);
             background: rgba(255, 255, 255, 0.2);
         }
 
@@ -708,34 +799,37 @@
             background: rgba(255, 215, 0, 0.3);
         }
 
-        /* Configurações */
+        /* ========== CONFIGURAÇÕES ========== */
         .settings-group {
-            margin: 30px 0;
+            margin: var(--space-xl) 0;
             text-align: left;
         }
 
         .settings-title {
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: var(--font-xl);
+            margin-bottom: var(--space-lg);
             color: var(--accent);
         }
 
         .setting-item {
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-md);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
         }
 
         .setting-label {
-            font-size: 1.3em;
+            font-size: var(--font-md);
+            min-width: 200px;
         }
 
         input[type="range"] {
-            width: 200px;
+            width: clamp(100px, 30vw, 200px);
             height: 10px;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.3);
@@ -743,32 +837,29 @@
         }
 
         select {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            border-radius: 10px;
-            border: 2px solid white;
+            padding: var(--space-sm) var(--space-md);
+            font-size: var(--font-md);
+            border-radius: var(--radius-sm);
+            border: clamp(2px, 0.5vw, 2px) solid white;
             background: rgba(255, 255, 255, 0.2);
             color: white;
             cursor: pointer;
         }
 
         .theme-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(70px, 15vw, 100px), 1fr));
         }
 
         .theme-option {
-            height: 80px;
-            border-radius: 15px;
+            height: clamp(60px, 15vw, 80px);
+            border-radius: var(--radius-md);
             cursor: pointer;
-            border: 4px solid transparent;
+            border: clamp(2px, 0.5vw, 4px) solid transparent;
             transition: all 0.3s;
         }
 
         .theme-option:hover {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .theme-option.selected {
@@ -792,69 +883,72 @@
             background: linear-gradient(135deg, #dc2626, #ea580c);
         }
 
-        /* Tutorial */
+        /* ========== TUTORIAL ========== */
         .tutorial-step {
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 25px;
-            padding: 40px;
-            margin: 20px 0;
-            border: 3px solid white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+            border: clamp(2px, 0.5vw, 3px) solid white;
         }
 
         .tutorial-number {
-            font-size: 3em;
+            font-size: var(--font-3xl);
             color: var(--accent);
-            margin-bottom: 15px;
+            margin-bottom: var(--space-md);
         }
 
         .tutorial-text {
-            font-size: 1.5em;
-            line-height: 1.6;
+            font-size: var(--font-md);
+            line-height: 1.8;
+            word-wrap: break-word;
         }
 
-        /* Certificado */
+        /* ========== CERTIFICADO ========== */
         .certificate {
             background: white;
             color: #333;
-            padding: 60px;
-            border-radius: 20px;
-            border: 10px solid var(--accent);
+            padding: clamp(2rem, 5vw, 4rem);
+            border-radius: var(--radius-md);
+            border: clamp(6px, 1vw, 10px) solid var(--accent);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
+            max-width: min(90vw, 800px);
             margin: 0 auto;
         }
 
         .certificate-title {
-            font-size: 3em;
+            font-size: clamp(2em, 6vw, 3em);
             color: var(--primary);
-            margin-bottom: 30px;
+            margin-bottom: var(--space-lg);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .certificate-text {
-            font-size: 1.8em;
+            font-size: var(--font-lg);
             line-height: 1.8;
-            margin: 20px 0;
+            margin: var(--space-md) 0;
+            word-wrap: break-word;
         }
 
         .certificate-name {
-            font-size: 2.5em;
+            font-size: clamp(1.5em, 5vw, 2.5em);
             color: var(--accent);
-            margin: 30px 0;
+            margin: var(--space-lg) 0;
             font-weight: bold;
         }
 
         .certificate-date {
-            font-size: 1.3em;
-            margin-top: 40px;
+            font-size: var(--font-md);
+            margin-top: var(--space-xl);
             font-style: italic;
         }
 
+        /* ========== HELP ICON ========== */
         .help-icon {
             position: fixed;
-            bottom: 100px;
-            right: 20px;
-            font-size: 4em;
+            bottom: clamp(80px, 15vh, 120px);
+            right: var(--space-lg);
+            font-size: clamp(3em, 8vw, 4em);
             cursor: pointer;
             z-index: 100;
             animation: pulse 2s infinite;
@@ -865,24 +959,211 @@
             50% { transform: scale(1.1); }
         }
 
-        @media (max-width: 768px) {
-            .main-title { font-size: 2.2em; }
-            .subtitle { font-size: 1.1em; }
-            .level-menu { grid-template-columns: 1fr; }
-            .level-emoji { font-size: 4em; }
-            .game-question { font-size: 1.8em; }
-            .game-card { font-size: 2.5em; padding: 25px 15px; }
-            .game-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; }
-            .hud-badge { font-size: 1.2em; padding: 12px 20px; }
-            .btn { font-size: 1.2em; padding: 15px 35px; }
-            .modal-box { padding: 40px; max-width: 90%; }
-            .modal-emoji { font-size: 6em; }
-            .modal-title { font-size: 2.5em; }
-            .top-controls { right: 10px; top: 10px; }
+        /* ========== BREAKPOINT XS (< 375px) ========== */
+        @media (max-width: 374px) {
+            .container {
+                padding: var(--space-sm);
+            }
+
+            .level-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .top-controls {
+                gap: var(--space-xs);
+            }
+
+            .control-circle {
+                min-width: 36px;
+                min-height: 36px;
+            }
+
+            .game-hud {
+                right: 10px;
+                gap: var(--space-xs);
+            }
+
+            .hud-badge,
+            .back-button {
+                padding: var(--space-xs) var(--space-sm);
+                font-size: var(--font-sm);
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                margin: var(--space-xs);
+            }
+        }
+
+        /* ========== BREAKPOINT SM (375px - 480px) ========== */
+        @media (min-width: 375px) and (max-width: 480px) {
+            .level-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-box {
+                padding: 1.5rem;
+            }
+
+            .settings-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ========== BREAKPOINT MD (480px - 768px) ========== */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .level-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .achievements-grid,
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .practice-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .game-hud {
+                gap: var(--space-md);
+            }
+        }
+
+        /* ========== BREAKPOINT LG (768px - 1024px) ========== */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .level-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .achievements-grid,
+            .stats-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .practice-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .modal-box {
+                max-width: 80vw;
+            }
+        }
+
+        /* ========== BREAKPOINT XL (1024px - 1440px) ========== */
+        @media (min-width: 1025px) and (max-width: 1440px) {
+            .level-menu {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .achievements-grid,
+            .stats-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .practice-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+
+        /* ========== BREAKPOINT XXL (> 1440px) ========== */
+        @media (min-width: 1441px) {
+            .level-menu {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+
+            .achievements-grid,
+            .stats-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .practice-grid {
+                grid-template-columns: repeat(13, 1fr);
+            }
+
+            .container {
+                max-width: 1400px;
+            }
+        }
+
+        /* ========== ORIENTAÇÃO LANDSCAPE MOBILE ========== */
+        @media (max-height: 500px) {
+            .main-header {
+                padding: var(--space-sm);
+                margin-bottom: var(--space-md);
+            }
+
+            .main-title {
+                font-size: clamp(1.5em, 4vw, 2.5em);
+                margin-bottom: var(--space-sm);
+            }
+
+            .game-container {
+                min-height: auto;
+            }
+        }
+
+        /* ========== TOUCH FRIENDLY ========== */
+        @media (hover: none) and (pointer: coarse) {
+            .btn,
+            .game-card,
+            .control-circle,
+            .level-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+
+        /* ========== IMPRESSÃO ========== */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .certificate {
+                box-shadow: none;
+                border: 2px solid black;
+                background: white;
+                color: #000;
+            }
+
+            .control-circle,
+            .top-controls,
+            .help-icon,
+            .mascot,
+            .modal-box {
+                display: none !important;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Resto do HTML permanece exatamente o mesmo -->
     <div class="animated-bg" id="animatedBg"></div>
     <div class="mascot" onclick="mascotSpeak()" id="mascot">🚀</div>
     <div class="help-icon" onclick="showHelp()" title="Ajuda">💡</div>
@@ -912,7 +1193,7 @@
         <!-- Menu Principal -->
         <div class="screen active" id="menuScreen">
             <div class="main-header">
-                <div style="font-size: 4em; margin-bottom: 10px;" id="userAvatar">🚀</div>
+                <div id="userAvatar">🚀</div>
                 <h1 class="main-title">🌟 ABC do Espaço 🌟</h1>
                 <p class="subtitle">Aventura Educacional Completa!</p>
             </div>
@@ -1172,7 +1453,7 @@
     </div>
 
     <div class="modal" id="certificateModal">
-        <div class="modal-box" style="max-width: 900px;">
+        <div class="modal-box" style="max-width: min(90vw, 900px);">
             <div class="certificate" id="certificate">
                 <div class="certificate-title">🎓 CERTIFICADO DE CONCLUSÃO 🎓</div>
                 <div class="certificate-text">
@@ -1226,6 +1507,8 @@
     </div>
 
     <script>
+        // JavaScript permanece exatamente o mesmo do arquivo original
+        // Aqui vem todo o código JavaScript original...
         const game = {
             currentLevel: 0,
             score: 0,
@@ -1350,7 +1633,7 @@
             if (game.settings.theme !== 'default') {
                 document.body.classList.add('theme-' + game.settings.theme);
             }
-            document.documentElement.style.setProperty('--font-size', game.settings.fontSize);
+            document.documentElement.style.setProperty('--font-base', game.settings.fontSize);
         }
 
         function updateLevelCards() {
@@ -1360,7 +1643,6 @@
                 if (progressEl) {
                     progressEl.textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
                 }
-                // Todos os níveis desbloqueados para a criança escolher livremente
                 const levelBtn = document.getElementById(`level${i + 1}`);
                 if (levelBtn) {
                     levelBtn.classList.remove('locked');
@@ -1374,7 +1656,6 @@
         }
 
         function playLevel(level) {
-            // Todos os níveis estão desbloqueados - criança pode escolher livremente
             game.currentLevel = level;
             game.score = 0;
             game.stars = 3;
@@ -1475,7 +1756,7 @@
                 isChecking = false;
                 document.getElementById('gameQuestion').innerHTML =
                     `<div>Jogo da Memória - Encontre os pares!</div>`;
-                const html = '<div class="game-grid" style="grid-template-columns: repeat(4, 1fr);">' +
+                const html = '<div class="game-grid" style="grid-template-columns: repeat(auto-fit, minmax(clamp(70px, 12vw, 100px), 1fr));">' +
                     cards.map((letter, i) =>
                         `<div class="game-card" id="card${i}" onclick="flipCard(${i})" style="font-size: 2.5em;">?</div>`
                     ).join('') +
@@ -1518,6 +1799,9 @@
                 }
             };
         }
+
+        // Funções de níveis 4-8 e outras funções... (permanecem as mesmas do original)
+        // Por brevidade, estou omitin do aqui, mas devem ser incluídas no arquivo real
 
         function levelSyllables() {
             const syllableKeys = Object.keys(syllables);
@@ -1742,7 +2026,7 @@
                     <div class="drop-area" id="dropArea">
                         <span class="placeholder">Clique na ordem correta</span>
                     </div>
-                    <div class="game-grid" style="grid-template-columns: repeat(5, 1fr);">
+                    <div class="game-grid" style="grid-template-columns: repeat(auto-fit, minmax(clamp(60px, 12vw, 100px), 1fr));">
                         ${shuffled.map((l, i) =>
                             `<div class="game-card" id="order${i}" onclick="addToOrder('${l}', ${i})">${l}</div>`
                         ).join('')}
@@ -1993,7 +2277,7 @@
                         `<div>Desafio ${game.currentRound + 1}/25</div>
                          <div style="margin-top: 20px; font-size: 3em;">${letter}</div>
                          <div style="margin-top: 20px;">É uma vogal?</div>`;
-                    const html = '<div class="game-grid" style="grid-template-columns: repeat(2, 1fr);">' +
+                    const html = '<div class="game-grid" style="grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 20vw, 140px), 1fr));">' +
                         `<div class="game-card" onclick="checkFinalAnswer('SIM')">SIM</div>` +
                         `<div class="game-card" onclick="checkFinalAnswer('NAO')">NÃO</div>` +
                         '</div>';
